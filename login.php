@@ -51,7 +51,75 @@
             </div>
         </div>
     </nav>
+    <div class="container">
+        <div class="jumbotron text-center text-light">
+            <h1 class="display-4">Best In Town</h1>
+            <h2 class="display-6">Home Appliance Store</h2>
+        </div>
+        <div class="card mx-auto my-5" style="width:420px">
+            <div class="card-header">
 
+                <h1 class=""> Login </h1>
+            </div>
+
+            <div class="card-body px-3">
+                <form action="insert_user.php" method="post" class="needs-validation" novalidate>
+
+
+                    <div class="form-group">
+
+                        <label for="uname">Username:</label>
+                        <input type="text" class="form-control" id="uname" placeholder="Enter username" name="uname"
+                            required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <label for="pwd">Password:</label>
+                        <input type="password" class="form-control" id="pwd" placeholder="Enter password" name="pswd"
+                            required>
+                        <div class="valid-feedback">Valid.</div>
+                        <div class="invalid-feedback">Please fill out this field.</div>
+
+                    </div>
+
+
+
+                    <input type="submit" class="btn btn-primary" value="Submit" />
+                </form>
+            </div>
+        </div>
+    </div>
+    <!-- Footer -->
+    <footer class="page-footer font-small bg-dark">
+        <div class="footer-copyright text-center text-light py-4">
+            &copy; <span id="year"></span> Copyright
+        </div>
+    </footer>
+    <!-- Footer -->
+
+    <script>
+    // Disable form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    </script>
     <script src="http://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
