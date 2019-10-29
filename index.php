@@ -39,10 +39,10 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Inventory</a>
+                        <a class="nav-link" href="view_inventory.php?id=0">Inventory</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Order</a>
+                        <a class="nav-link" href="order.php">Order</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php">Contact</a>
@@ -57,17 +57,17 @@
             <h1 class="display-4">Welcome To Best In Town!</h1>
             <h2 class="display-6">Home Appliance Store</h2>
             <br>
-            <a class="btn btn-primary btn-lg" href="#" role="button">Order Now</a>
+            <a class="btn btn-primary btn-lg" href="order.php" role="button">Order Now</a>
         </div>
 
-        <div class="card-columns">
+        <div class="card-deck mb-3">
             <div class="card ">
                 <div class="card-body">
                     <h2 class="card-title text-center">Refrigerators</h2>
                 </div>
                 <img class="card-img-top img-fluid" src="img/Picture2m.jpg" alt="">
                 <div class="card-body text-center">
-                    <a class="btn btn-primary btn-lg" href=#>View Selection</a>
+                    <a class="btn btn-primary btn-lg" href="view_inventory.php?id=1">View Selection</a>
                 </div>
             </div>
 
@@ -77,7 +77,7 @@
                 </div>
                 <img class="card-img-top img-fluid" src="img/Picture3m.jpg" alt="">
                 <div class="card-body text-center">
-                    <a class="btn btn-primary btn-lg" href=#>View Selection</a>
+                    <a class="btn btn-primary btn-lg" href="view_inventory.php?id=2">View Selection</a>
                 </div>
             </div>
 
@@ -87,7 +87,7 @@
                 </div>
                 <img class="card-img-top img-fluid" src="img/Picture2.png" alt="">
                 <div class="card-body text-center">
-                    <a class="btn btn-primary btn-lg" href=#>View Selection</a>
+                    <a class="btn btn-primary btn-lg" href="view_inventory.php?id=3">View Selection</a>
                 </div>
             </div>
         </div>

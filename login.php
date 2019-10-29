@@ -1,3 +1,83 @@
+<?php require_once('db_configuration.php');
+ob_start();
+session_start();
+
+$errors = [];
+$username = '';
+$password = '';
+
+if($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $username = $_POST['uname'] ?? '';
+    $password = $_POST['pswd'] ?? '';
+
+// Validations
+    if(!isset($username) || trim($username) === '') {
+  $errors[] = "Username cannot be blank.";
+    }
+    if(!isset($password) || trim($password) === '') {
+  $errors[] = "Password cannot be blank.";
+    }
+
+    if(empty($errors)){
+        $login_failure_msg = "Log in was unsuccessful.";
+        $user = find_user($username);
+       // echo '$user["user_name"]';
+        if($user) {
+
+            if($password == $user['password']){
+                //echo 'password verified ';
+               if (log_in_user($user)){
+                  // echo $_SESSION['user_id'];
+                $manager = $user['role'];
+                if($manager){
+                    header("Location: manager_home.php");
+                }else{
+                    header("Location: customer_home.php");
+                }
+               }
+                
+            }
+      
+          } else {
+            // no username found
+            $errors[] = $login_failure_msg;
+          }
+    }
+}
+
+//functions
+/* function find_admin_by_username($username) {
+    global $db;
+
+    $sql = "SELECT * FROM admins ";
+    $sql .= "WHERE username='" . db_escape($db, $username) . "' ";
+    $sql .= "LIMIT 1";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    $admin = mysqli_fetch_assoc($result); // find first
+    mysqli_free_result($result);
+    return $admin; // returns an assoc. array
+  }
+ */
+  function find_user($username){
+      global $db;
+
+      $query = "SELECT `user_id`, `user_name`, `password`, `role` FROM `users` WHERE `user_name` = '$username'";
+      $result = run_sql($query);
+      $user = mysqli_fetch_assoc($result);
+      mysqli_free_result($result);
+      return $user;
+  }
+
+  function log_in_user($user) {
+    // Renerating the ID protects the admin from session fixation.
+      session_regenerate_id();
+      $_SESSION['user_id'] = $user['user_id'];
+      $_SESSION['last_login'] = time();
+      $_SESSION['username'] = $user['user_name'];
+      return true;
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -63,7 +143,7 @@
             </div>
 
             <div class="card-body px-3">
-                <form action="insert_user.php" method="post" class="needs-validation" novalidate>
+                <form action="login.php" method="post" class="needs-validation" novalidate>
 
 
                     <div class="form-group">

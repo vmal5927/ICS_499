@@ -26,7 +26,7 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a href="#" class="nav-link" style="color: #ffa343;">Logout</a>
+                        <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#" style="color: #ffa343;">Inventory</a>

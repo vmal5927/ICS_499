@@ -29,13 +29,13 @@
                         <a class="nav-link" href="about.html" style="color: #ffa343;">About</a>
                     </li>
                     <li class="nav-item">
-                        <a href="#" class="nav-link" style="color: #ffa343;">Logout</a>
+                        <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #ffa343;">Inventory</a>
+                        <a class="nav-link" href="view_inventory.php" style="color: #ffa343;">Inventory</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #ffa343;">Order</a>
+                        <a class="nav-link" href="order.php" style="color: #ffa343;">Order</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php" style="color: #ffa343;">Contact</a>
@@ -69,8 +69,8 @@
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-primary" style="width: 145px; background-color: #8A2BE2;" href="#"> View
-                                Inventory</a>
+                            <a class="btn btn-primary" style="width: 145px; background-color: #8A2BE2;"
+                                href="view_inventory.php"> View Inventory</a>
                         </div>
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
@@ -88,8 +88,8 @@
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 125px;" href="#">Place
-                                Order</a>
+                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 125px;"
+                                href="order.php">Place Order</a>
                         </div>
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">

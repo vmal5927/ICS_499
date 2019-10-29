@@ -22,3 +22,33 @@ form label {
 textarea {
   width: 100%;
 }
+
+.nav-link a:link,
+a:visited {
+  color: #ffa343 !important;
+}
+
+a:hover,
+a:active {
+  color: gold !important;
+  -webkit-transform: scale(1.1);
+}
+
+.nav-link a {
+  color: #ffa343 !important;
+}
+
+.nav-link {
+  color: #ffa343 !important;
+}
+thead tr {
+  background-color: #98fb98 !important;
+}
+
+tr {
+  background-color: #e6ffe6;
+}
+
+tr:nth-child(even) {
+  background-color: #eee8aa !important;
+}
