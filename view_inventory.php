@@ -1,6 +1,20 @@
 <?php
-    require_once('db_configuration.php');
+    
+    ob_start();
+	session_start();
+	require_once('db_configuration.php');
 
+	$logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
+	if($logged_in){
+		$user_id = $_SESSION['user_id'];
+		$user = find_user($user_id);
+		$manager = $user['role'];
+	}
+   
+	
+
+    
+	
     $id = $_GET['id'] ?? '0';
 
     switch($id){
@@ -18,6 +32,16 @@
     }
     
 	$result = run_sql($query);
+
+	function find_user($user_id){
+		global $db;
+  
+		$query = "SELECT `user_id`, `user_name`, `password`, `role` FROM `users` WHERE `user_id` = '$user_id'";
+		$result = run_sql($query);
+		$user = mysqli_fetch_assoc($result);
+		mysqli_free_result($result);
+		return $user;
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -49,24 +73,41 @@
                 </form> -->
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
+					<?php
+						if($logged_in){
+							if($manager){
+								echo '<a class="nav-link" href="manager_home.php">Home</a>';
+							} else {
+								echo '<a class="nav-link" href="customer_home.php">Home</a>';
+							}
+						} else {
+							echo '<a class="nav-link" href="index.php">Home</a>';
+						}
+					?>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
-                        <div class="dropdown-menu">
+                    <?php if($logged_in){
+                            echo '<li class="nav-item">
+                                        <a href="logout.php" class="nav-link">Logout</a>
+                                 </li>';
+                        } else {
+                            echo '<li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>  <div class="dropdown-menu">
                             <a href="sign_up.php" class="dropdown-item">Sign Up</a>
                             <a href="login.php" class="dropdown-item">Log in</a>
-                        </div>
-                    </li>
+                        </div> </li>';
+                        }
+                        ?>
                     <li class="nav-item">
                         <a class="nav-link" href="order.php">Order</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
+					<?php if($logged_in){
+						echo '<li class="nav-item">
+						 		<a class="nav-link" href="contact.php">Contact</a>
+					 		</li>';
+						}
+						?>
                 </ul>
             </div>
         </div>

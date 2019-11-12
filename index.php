@@ -29,13 +29,13 @@
                         <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
                         <div class="dropdown-menu">
                             <a href="sign_up.php" class="dropdown-item">Sign Up</a>
-                            <a href="login.php" class="dropdown-item">Log in</a>
+                            <a href="login.php?id=1" class="dropdown-item">Log in</a>
                         </div>
                     </li>
                     <li class="nav-item">
@@ -44,9 +44,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="order.php">Order</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>

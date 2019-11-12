@@ -2,6 +2,8 @@
 ob_start();
 session_start();
 
+$id = $_GET['id'] ?? '0';
+$page = $_GET['page'] ?? '';
 $errors = [];
 $username = '';
 $password = '';
@@ -27,13 +29,19 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             if($password == $user['password']){
                 //echo 'password verified ';
                if (log_in_user($user)){
-                  // echo $_SESSION['user_id'];
-                $manager = $user['role'];
-                if($manager){
-                    header("Location: manager_home.php");
-                }else{
-                    header("Location: customer_home.php");
-                }
+				  // echo $_SESSION['user_id'];
+				  //if(isset($id) && $id = 0){
+					 
+                	$manager = $user['role'];
+                	if($manager){
+                   	 	header("Location: manager_home.php");
+               		 }else{
+                   		 header("Location: customer_home.php");
+					}
+				//}
+				// if(isset($page)){
+				// 	header("Location: $page");
+				// }
                }
                 
             }
@@ -109,7 +117,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                         <a class="nav-link" href="#">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
                     <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>

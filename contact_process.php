@@ -1,3 +1,10 @@
+<?php
+ ob_start();
+ session_start();
+ $user_id = $_SESSION['user_id'];
+ $logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
+ ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +16,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>Sign up</title>
+    <title>contact_process</title>
 </head>
 
 <body>
@@ -31,13 +38,17 @@
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">About</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
-                        <div class="dropdown-menu">
+                    <?php if($logged_in){
+                            echo '<li class="nav-item">
+                                        <a href="logout.php" class="nav-link">Logout</a>
+                                 </li>';
+                        } else {
+                            echo '<li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>  <div class="dropdown-menu">
                             <a href="sign_up.php" class="dropdown-item">Sign Up</a>
                             <a href="login.php" class="dropdown-item">Log in</a>
-                        </div>
-                    </li>
+                        </div> </li>';
+                        }
+                        ?>
                     <li class="nav-item">
                         <a class="nav-link" href="view_inventory.php">Inventory</a>
                     </li>
@@ -56,50 +67,37 @@
             <h1 class="display-4">Best In Town</h1>
             <h2 class="display-6">Home Appliance Store</h2>
         </div>
+<?php
+ //ob_start();
+ //session_start();
+ //$user_id = $_SESSION['user_id'];
+//require_once('PHPMailer/PHPMailerAutoload.php');
+require_once('db_configuration.php');
 
-        <?php
-        require_once('db_configuration.php');
+// $fname = trim($_POST['fname']);
+// $lname = trim($_POST['lname']);
+// $email = trim($_POST['email']);
+// $lname = trim($_POST['lname']);
+$subject = trim($_POST['subject']);
+$message = trim($_POST['message']);
+// $toaddress = "maliv3@msn.com";
+// $content = "First Name: " . str_replace("\r\n", "", $fname) . "\n" . 
+// 			"Last Name: " . str_replace("\r\n", "", $lname) . "\n" . 
+// 			"Email: " . str_replace("\r\n", "", $email) . "\n" . 
+// 			"Message: " . str_replace("\r\n", "", $message) . "\n";
 
-        $first_name = $_POST['fname'];
-        $last_name = $_POST['lname'];
-        $user_name = $_POST['uname'];
-        $password = $_POST['pswd'];
-        $street_address = $_POST['streetaddress'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip_code = $_POST['zip'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-
-        // $query = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)";
-        // $stmt = $db -> prepare($query);
-        // $stmt -> bind_param('sssssss', $first_name, $last_name, $user_name, $password, $street_address, $city, $state);
-        // $stmt -> execute();
-        // if($stmt -> affected_rows > 0){
-        //     echo "<p>User inserted successfully.</p>";
-        // }else{
-        //     echo "<p>Failed to insert user.</p>";
-        // }
-      //  $query = "INSERT INTO users VALUES ($fname, $last_name, $user_name, $password, $street_address, $city, $state)";
-
-    //   $sql = "INSERT INTO book (publisher_name, author, book_name, series, genre,
-    //                          pages, isbn_10, isbn_13, language, price, stock,
-    //                          published_date, image)
-    //       VALUES('$publisher','$autor','$bookName','$series','$genre','$pages',
-    //              '$isbn10','$isbn13','$language','$price','$stock','$publishedDate',
-    //              '$image' );";
-
-        // $query = "INSERT INTO `users`(`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`) VALUES ($first_name, $last_name, $user_name, $password, $street_address, $city, $state)";
-        $query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
-        $result = run_sql($query);
-        $query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
-        $result1 = run_sql($query);
-        $db -> close();
-        if($result){
-            echo '<div class="card">Success! The user has been added.</div>';
-        }
-        ?>
-    </div>
+$query = "INSERT INTO customers_feedback (`user_id`, `subject`, `message`) VALUES ('$user_id', '$subject', '$message');";
+$result = run_sql($query);
+//$query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
+//$result1 = run_sql($query);
+$db -> close();
+if($result){
+	echo '<div class="card">The feedback has been submitted. Thanks for your interest!</div>';
+}
+		
+//mail($toaddress, $subject, $content);
+?>
+ </div>
     <!-- Footer -->
 
     <footer class="fixed-bottom page-footer font-small bg-dark">

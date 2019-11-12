@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <div class="container">
-            <a class="navbar-brand" href="#" style="color: #ffa343;">Best In Town</a>
+            <a class="navbar-brand" href="#">Best In Town</a>
             <button class=" navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -29,7 +29,7 @@
                         <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#" style="color: #ffa343;">Inventory</a>
+                        <a class="nav-link" href="view_inventory.php" style="color: #ffa343;">Inventory</a>
                     </li>
                     <li class=" nav-item">
                         <a class="nav-link" href="#" style="color: #ffa343;">Order</a>
@@ -63,20 +63,20 @@
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-primary" style="width: 200px;" href="#"> View Inventory</a>
+                            <a class="btn btn-primary" style="width: 200px;" href="view_inventory.php"> View/Search Inventory</a>
                         </div>
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-success" style="width: 200px;" href="#">Search Inventory</a>
+                            <a class="btn btn-success" style="width: 200px;" href="#">Add Item</a>
                         </div>
                     </div>
-                    <div id="collapseOne" class="collapse" data-parent="#accordion">
+                    <!-- <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
                             <a class="btn " style="width: 200px; background-color: #4B0082; color: white;" href="#">Add
                                 Item</a>
                         </div>
-                    </div>
+                    </div> -->
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
                             <a class="btn btn-danger" style="width: 200px;" href="#">Update/Remomve Item</a>
@@ -91,7 +91,7 @@
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 130px;" href="#">View
+                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 130px;" href="view_orders.php">View
                                 Orders</a>
                         </div>
                     </div>

@@ -15,7 +15,7 @@
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <div class="container">
-            <a class="navbar-brand" href="#" style="color: #ffa343;">Best In Town</a>
+            <a class="navbar-brand" href="#">Best In Town</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -26,7 +26,7 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html" style="color: #ffa343;">About</a>
+                        <a class="nav-link" href="about.php" style="color: #ffa343;">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
@@ -112,12 +112,14 @@
                     </div>
                     <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-success" style="width: 125px;" href="#">View Profile</a>
+                            <a class="btn btn-success" style="width: 125px;" href="manage_profile.php?update=0">View
+                                Profile</a>
                         </div>
                     </div>
                     <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white;" href="#">Update Profile</a>
+                            <a class="btn" style="background-color: #8A2BE2; color: white;"
+                                href="manage_profile.php?update=1">Update Profile</a>
                         </div>
                     </div>
                 </div>

@@ -52,3 +52,7 @@ tr {
 tr:nth-child(even) {
   background-color: #eee8aa !important;
 }
+
+.navbar-brand {
+  color: #ffa343 !important;
+}

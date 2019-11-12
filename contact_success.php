@@ -29,15 +29,26 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <!-- <li class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
                         <div class="dropdown-menu">
                             <a href="sign_up.php" class="dropdown-item">Sign Up</a>
                             <a href="login.php" class="dropdown-item">Log in</a>
                         </div>
-                    </li>
+                    </li> -->
+					<?php if($logged_in){
+                            echo '<li class="nav-item">
+                                        <a href="logout.php" class="nav-link">Logout</a>
+                                 </li>';
+                        } else {
+                            echo '<li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>  <div class="dropdown-menu">
+                            <a href="sign_up.php" class="dropdown-item">Sign Up</a>
+                            <a href="login.php" class="dropdown-item">Log in</a>
+                        </div> </li>';
+                        }
+                        ?>
                     <li class="nav-item">
                         <a class="nav-link" href="#">Inventory</a>
                     </li>

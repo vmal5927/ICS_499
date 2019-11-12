@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>Sign up</title>
+    <title>Create order line</title>
 </head>
 
 <body>
@@ -31,12 +31,8 @@
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">About</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
-                        <div class="dropdown-menu">
-                            <a href="sign_up.php" class="dropdown-item">Sign Up</a>
-                            <a href="login.php" class="dropdown-item">Log in</a>
-                        </div>
+                    <li class="nav-item">
+                        <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="view_inventory.php">Inventory</a>
@@ -59,45 +55,48 @@
 
         <?php
         require_once('db_configuration.php');
+        ob_start();
+        session_start();
 
-        $first_name = $_POST['fname'];
-        $last_name = $_POST['lname'];
-        $user_name = $_POST['uname'];
-        $password = $_POST['pswd'];
-        $street_address = $_POST['streetaddress'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip_code = $_POST['zip'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
+        // $first_name = $_POST['fname'];
+        // $last_name = $_POST['lname'];
+        // $user_name = $_POST['uname'];
+        // $password = $_POST['pswd'];
+        // $street_address = $_POST['streetaddress'];
+        // $city = $_POST['city'];
+        // $state = $_POST['state'];
+        // $zip_code = $_POST['zip'];
+        // $email = $_POST['email'];
+        // $phone = $_POST['phone'];
 
-        // $query = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)";
-        // $stmt = $db -> prepare($query);
-        // $stmt -> bind_param('sssssss', $first_name, $last_name, $user_name, $password, $street_address, $city, $state);
-        // $stmt -> execute();
-        // if($stmt -> affected_rows > 0){
-        //     echo "<p>User inserted successfully.</p>";
-        // }else{
-        //     echo "<p>Failed to insert user.</p>";
-        // }
-      //  $query = "INSERT INTO users VALUES ($fname, $last_name, $user_name, $password, $street_address, $city, $state)";
+        $item_id = $_POST['item_id'];
+        $quantity = $_POST['quantity'];
+        $customer_id = $_SESSION['user_id'];
+        $query = "INSERT INTO orders (`customer_id`) VALUES ('$customer_id');";
+        
+       // $date = date_create()->format('M-d-Y');
+        // $query = "INSERT INTO orders (`customer_id`, `date`) VALUES ('$customer_id', now();";
+        // $query = "INSERT INTO orders (`customer_id`, `date`) VALUES ('$customer_id', DATE_FORMAT(NOW(),'%b-%d-%Y'));";
 
-    //   $sql = "INSERT INTO book (publisher_name, author, book_name, series, genre,
-    //                          pages, isbn_10, isbn_13, language, price, stock,
-    //                          published_date, image)
-    //       VALUES('$publisher','$autor','$bookName','$series','$genre','$pages',
-    //              '$isbn10','$isbn13','$language','$price','$stock','$publishedDate',
-    //              '$image' );";
-
-        // $query = "INSERT INTO `users`(`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`) VALUES ($first_name, $last_name, $user_name, $password, $street_address, $city, $state)";
-        $query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
+        // $query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
         $result = run_sql($query);
-        $query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
-        $result1 = run_sql($query);
+        $query = "SELECT `order_id` FROM `orders` ORDER BY `order_id` DESC LIMIT 1;";
+        $result = run_sql($query);
+        if ($result->num_rows > 0) {
+             if($row = $result->fetch_assoc()) {
+                $order_id = $row["order_id"];
+             }
+            }
+        $query = "INSERT INTO order_lines (`item_id`, `order_id`, `quantity`) VALUES ('$item_id', '$order_id', '$quantity');";
+        $result = run_sql($query);
+                // echo    '<tr>
+                //           <td> '.$row["item_id"].'</td>
+        // $query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
+        // $result1 = run_sql($query);
         $db -> close();
-        if($result){
-            echo '<div class="card">Success! The user has been added.</div>';
-        }
+       // if($result){
+            echo '<div class="card">Success! The order has been added.</div>';
+       // }
         ?>
     </div>
     <!-- Footer -->

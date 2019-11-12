@@ -6,6 +6,9 @@
         header("Location: login.php");
     }
     require_once ('db_configuration.php');
+
+    $query = "SELECT * FROM `inventory`";
+    $result = run_sql($query);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -18,7 +21,9 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <link rel="stylesheet" href="css/style.css" />
-    <title>customer_home</title>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+    <title>Order</title>
 </head>
 
 <body>
@@ -35,7 +40,7 @@
                 </form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html" style="color: #ffa343;">About</a>
+                        <a class="nav-link" href="about.php" style="color: #ffa343;">About</a>
                     </li>
                     <li class="nav-item">
                         <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
@@ -55,6 +60,67 @@
             <h1>Best In Town - Home Appliance Store</h1>
             <h3>Customers Home Page</h3>
         </div>
+        <div class="card my-5">
+            <div class="card-header">
+                <h1 class="text-center m-4">Select Items to Order</h1>
+            </div>
+            <div class="card-body">
+                <table class="table table-striped" id="inventory_items">
+                    <div class="table responsive">
+                        <thead>
+                            <tr>
+                                <!--<th>Item ID</th>-->
+                                <th>Item ID</th>
+                                <th>Name</th>
+                                <th>Brand</th>
+                                <th>Model</th>
+                                <th>Price</th>
+                                <th>Order</th>
+                                <!-- <th>Required</th>
+                        <th>Optional</th>
+                        <th>Cadence</th>
+                        <th>Time_lower</th>
+                        <th>Time_upper</th>
+                        <th>Contains_demo</th>
+                        <th>Demo_lead</th>
+						<th>Is_optional</th>
+                        <th>Is_safe</th>
+                        <th>Safe_link</th>
+                        <th>Status</th>
+                        <th>Comments</th>
+						<th>Update Rows</th>
+						<th>Delete Rows</th>
+						<th>View Rows</th> -->
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+						  if ($result->num_rows > 0) {
+                            // output data of each row
+                         	while($row = $result->fetch_assoc()) {
+                             
+
+                                echo    '<tr>
+                                          <!--<td> '.$row["item_id"].'</td>-->
+                                          <td> '.$row["item_id"].'</td>
+                                          <td> '.$row["item_name"]. '</td>
+                                          <td> '.$row["brand"]. '</td>
+                                          <td> '.$row["model"]. '</td>
+                                          <td> '.$row["price"]. '</td>
+                                          <td><a href="order_form.php?id='.$row["item_id"].'"><input class="btn btn-info" type="button" value="order item"></a></td>
+                                        </tr>';
+
+                            }//end while
+                        }//end if
+                        else {
+                            echo "0 results";
+                        }//end else
+                        ?>
+                        </tbody>
+                    </div>
+                </table>
+            </div>
+        </div>
     </div>
     <!-- Footer -->
     <footer class="page-footer font-small bg-dark mt-5">
@@ -70,6 +136,12 @@
     </script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript">
+    $(document).ready(function() {
+        $('#inventory_items').dataTable();
+    });
     </script>
     <script>
     $('#year').text(new Date().getFullYear());

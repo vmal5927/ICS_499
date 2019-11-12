@@ -1,3 +1,15 @@
+<?php 
+    ob_start();
+	session_start();
+	
+	$logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
+	if(!$logged_in)
+		header("Location: login.php");
+    // if(!isset($_SESSION['user_id'])){
+    //     header("Location: login.php?page=contact.php");
+    // }
+    // require_once ('db_configuration.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,7 +21,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
-    <title>Sign up</title>
+    <title>Contact</title>
 </head>
 
 <body>
@@ -29,15 +41,23 @@
                         <a class="nav-link" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="about.html">About</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
-                    <li class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>
-                        <div class="dropdown-menu">
+
+                    <?php if($logged_in){
+                            echo '<li class="nav-item">
+                                        <a href="logout.php" class="nav-link">Logout</a>
+                                 </li>';
+                        } else {
+                            echo '<li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>  <div class="dropdown-menu">
                             <a href="sign_up.php" class="dropdown-item">Sign Up</a>
                             <a href="login.php" class="dropdown-item">Log in</a>
-                        </div>
-                    </li>
+                        </div> </li>';
+                        }
+                        ?>
+
+
+                    <!-- </li>-->
                     <li class="nav-item">
                         <a class="nav-link" href="view_inventory.php">Inventory</a>
                     </li>
@@ -69,8 +89,9 @@
                 has been submitting (if there's anything missing).</p>
             <p>Try to submit this form before filling out the input fields, to see the effect.</p> -->
             <div class="card-body px-3">
-                <form action="contact_success.php" method="post" class="needs-validation" novalidate>
-                    <div class="form-row">
+                <!-- <form action="contact_success.php" method="post" class="needs-validation" novalidate> -->
+				<form action="contact_process.php" method="post" class="needs-validation" novalidate>
+                    <!-- <div class="form-row">
                         <div class="form-group">
                             <div class="col">
                                 <label for="fname">First Name:</label>
@@ -87,16 +108,16 @@
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="form-row">
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <div class="col">
-                                <label for="uname">email:</label>
-                                <input type="text" class="form-control" id="uname" name="email" required>
+                                <label for="email">email:</label>
+                                <input type="text" class="form-control" id="email" name="email" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
-                        </div>
+                        </div> -->
 
                         <div class="form-group">
                             <div class="col">
