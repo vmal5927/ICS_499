@@ -1,17 +1,24 @@
 <?php 
     ob_start();
     session_start();
-    
+	require_once ('db_configuration.php');
+	
     if(!isset($_SESSION['user_id'])){
         header("Location: login.php");
-    }
-    require_once ('db_configuration.php');
-
-	//$order_id = $_GET['order_id'] ?? '';
-	$order_id = $_SESSION['order_id'] ?? '';
-
-    $query = "SELECT * FROM `inventory`";
-    $result = run_sql($query);
+	}
+	if(!isset($_SESSION['role']) || $_SESSION['role'] == '0'){
+		echo 'You must be logged in as a manager to access this page!';
+	}
+	
+	$logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
+	if($logged_in){
+		
+		$manager = $_SESSION['role'];
+	}
+	
+    $query = "SELECT * FROM `users`";
+	$result = run_sql($query);
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +33,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-    <title>Order</title>
+    <title>Modify Profiles</title>
 </head>
 
 <body>
@@ -46,6 +53,19 @@
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
 				</form>
                 <ul class="navbar-nav">
+				<li class="nav-item">
+					<?php
+						if($logged_in){
+							if($manager){
+								echo '<a class="nav-link" href="manager_home.php">Home</a>';
+							} else {
+								echo '<a class="nav-link" href="customer_home.php">Home</a>';
+							}
+						} else {
+							echo '<a class="nav-link" href="index.php">Home</a>';
+						}
+					?>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.php" style="color: #ffa343;">About</a>
                     </li>
@@ -65,23 +85,28 @@
     <div class="container">
         <div class="jumbotron text-center text-light">
             <h1>Best In Town - Home Appliance Store</h1>
-            <h3>Customers Home Page</h3>
+            <h3>Update/Remove Profile</h3>
         </div>
         <div class="card my-5">
             <div class="card-header">
-                <h1 class="text-center m-4">Select Items to Order</h1>
+                <h1 class="text-center m-4">To Update or Remove a Profile Click the Corresponding Button</h1>
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="inventory_items">
                     <div class="table responsive">
                         <thead>
                             <tr>
-                                <th>Item ID</th>
-                                <th>Name</th>
-                                <th>Brand</th>
-                                <th>Model</th>
-                                <th>Price</th>
-                                <th>Order</th>
+                                <th>User ID</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <!-- <th>User Name</th> -->
+								<th>Street Address</th>
+								<th>City</th>
+								<th>State</th>
+								<!-- <th>Email</th> -->
+								<th>Phone</th>
+								<th>Update</th>
+								<th>Remove</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -92,14 +117,17 @@
                              
 
                                 echo    '<tr>
-                                          <!--<td> '.$row["item_id"].'</td>-->
-                                          <td> '.$row["item_id"].'</td>
-                                          <td> '.$row["item_name"]. '</td>
-                                          <td> '.$row["brand"]. '</td>
-                                          <td> '.$row["model"]. '</td>
-                                          <td> '.$row["price"]. '</td>
-										  <td><a href="order_form.php?id='.$row["item_id"].'"><input
-										 	  class="btn btn-info" type="button" value="order item"></a></td>
+                                         	<td> '.$row["user_id"].'</td>
+                                          	<td> '.$row["first_name"]. '</td>
+											<td> '.$row["last_name"]. '</td>
+                                          	<td> '.$row["street_address"]. '</td>
+											<td> '.$row["city"]. '</td>
+											<td> '.$row["state"]. '</td>
+											<td> '.$row["phone"]. '</td>
+										  	<td><a href="update_profile.php?id='.$row["user_id"].'"><input
+											   class="btn btn-warning" type="button" value="Update Profile"></a></td>
+											<td><a href="remove_profile.php?id='.$row["user_id"].'"><input
+										 	  class="btn btn-danger" type="button" value="Remove Profile"></a></td>
                                         </tr>';
 
                             }//end while

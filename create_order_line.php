@@ -20,10 +20,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
+                <!-- <form class="form-inline mr-auto">
                     <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
                     <button class="btn btn-outline-primary">Search</button>
-                </form>
+                </form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Home</a>
@@ -58,46 +62,41 @@
         ob_start();
         session_start();
 
-        // $first_name = $_POST['fname'];
-        // $last_name = $_POST['lname'];
-        // $user_name = $_POST['uname'];
-        // $password = $_POST['pswd'];
-        // $street_address = $_POST['streetaddress'];
-        // $city = $_POST['city'];
-        // $state = $_POST['state'];
-        // $zip_code = $_POST['zip'];
-        // $email = $_POST['email'];
-        // $phone = $_POST['phone'];
+        
 
         $item_id = $_POST['item_id'];
         $quantity = $_POST['quantity'];
-        $customer_id = $_SESSION['user_id'];
-        $query = "INSERT INTO orders (`customer_id`) VALUES ('$customer_id');";
-        
-       // $date = date_create()->format('M-d-Y');
-        // $query = "INSERT INTO orders (`customer_id`, `date`) VALUES ('$customer_id', now();";
-        // $query = "INSERT INTO orders (`customer_id`, `date`) VALUES ('$customer_id', DATE_FORMAT(NOW(),'%b-%d-%Y'));";
-
-        // $query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
-        $result = run_sql($query);
-        $query = "SELECT `order_id` FROM `orders` ORDER BY `order_id` DESC LIMIT 1;";
-        $result = run_sql($query);
-        if ($result->num_rows > 0) {
+		$customer_id = $_SESSION['user_id'];
+		$order_id = $_SESSION['order_id'] ?? '';
+		if($order_id == ''){
+			$query = "INSERT INTO orders (`customer_id`) VALUES ('$customer_id');";
+			$result = run_sql($query);
+			$query = "SELECT `order_id` FROM `orders` ORDER BY `order_id` DESC LIMIT 1;";
+        	$result = run_sql($query);
+        	if ($result->num_rows > 0) {
              if($row = $result->fetch_assoc()) {
-                $order_id = $row["order_id"];
+				$order_id = $row["order_id"];
+				$_SESSION['order_id'] = $order_id;
              }
             }
+		}
+        
+        
+       
         $query = "INSERT INTO order_lines (`item_id`, `order_id`, `quantity`) VALUES ('$item_id', '$order_id', '$quantity');";
         $result = run_sql($query);
-                // echo    '<tr>
-                //           <td> '.$row["item_id"].'</td>
-        // $query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
-        // $result1 = run_sql($query);
+               
         $db -> close();
-       // if($result){
-            echo '<div class="card">Success! The order has been added.</div>';
-       // }
+        //if($result){
+			echo '<div class="card"> <span class="text-center">The order has been recorded. 
+					Do you wish to add another item to the order?</span><br><br>
+					<a class="btn btn-info m-1"  href="order.php?order_id='.$order_id.'">Yes, go to order page</a>
+					<a class="btn btn-secondary m-1"  href="customer_home.php">No, go to home page</a>
+				</div>';
+			
+	
         ?>
+		
     </div>
     <!-- Footer -->
 

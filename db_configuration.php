@@ -4,6 +4,7 @@ DEFINE('DATABASE_DATABASE', 'home_appliance_store');
 DEFINE('DATABASE_USER', 'root');
 DEFINE('DATABASE_PASSWORD', '');
 
+$order_id = $order_id ?? '';
 $db = new mysqli(DATABASE_HOST, DATABASE_USER, DATABASE_PASSWORD, DATABASE_DATABASE);
 $db->set_charset("utf8");
 function run_sql($sql_script)
@@ -31,4 +32,19 @@ function run_sql($sql_script)
         }
     }
 }
+
+function display_errors($errors=array()) {
+	$output = '';
+	if(!empty($errors)) {
+	  $output .= "<div class=\"errors\">";
+	  $output .= "The following errors have occurred:";
+	  $output .= "<ul>";
+	  foreach($errors as $error) {
+		$output .= "<li>" . htmlspecialchars($error) . "</li>";
+	  }
+	  $output .= "</ul>";
+	  $output .= "</div>";
+	}
+	return $output;
+  }
 ?>

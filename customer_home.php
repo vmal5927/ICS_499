@@ -20,10 +20,15 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
+                <!-- <form class="form-inline mr-auto" method="post" action="searchBox.php?go id="searchform>
                     <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
                     <button class="btn btn-outline-primary">Search</button>
-                </form>
+                </form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
+
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="about.php" style="color: #ffa343;">About</a>
@@ -88,18 +93,18 @@
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 125px;"
+                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 165px;"
                                 href="order.php">Place Order</a>
                         </div>
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-success" style="width: 125px;" href="#">Search Orders</a>
+                            <a class="btn btn-success" style="width: 165px;" href="view_orders_customer.php">View/Search Orders</a>
                         </div>
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-danger" style="width: 130px;" href="#">Modify Orders</a>
+                            <a class="btn btn-danger" style="width: 165px;" href="cancel_orders.php">Cancel Orders</a>
                         </div>
                     </div>
                 </div>
@@ -118,8 +123,8 @@
                     </div>
                     <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white;"
-                                href="manage_profile.php?update=1">Update Profile</a>
+                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 125px;"
+                                href="manage_profile.php?update=1">Edit Profile</a>
                         </div>
                     </div>
                 </div>
@@ -127,7 +132,7 @@
 
             <div class="card ">
                 <div class="card-body">
-                    <img class="card-img-top img-fluid" src="img/Appliances.jpg" alt="">
+                    <img class="card-img-top img-fluid" src="img/Appliances.jpg" alt="Appliances">
                 </div>
             </div>
 

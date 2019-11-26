@@ -1,17 +1,31 @@
-<?php 
-    ob_start();
-    session_start();
+<?php
     
-    if(!isset($_SESSION['user_id'])){
-        header("Location: login.php");
-    }
-    require_once ('db_configuration.php');
+    ob_start();
+	session_start();
+	require_once('db_configuration.php');
 
-	//$order_id = $_GET['order_id'] ?? '';
-	$order_id = $_SESSION['order_id'] ?? '';
+	$logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
+	if($logged_in){
+		$user_id = $_SESSION['user_id'];
+		$user = find_user($user_id);
+		$manager = $user['role'];
+	}
+       	   
+	// $query = "SELECT `item_id`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o WHERE ol.order_id = o.order_id AND customer_id = '$user_id'";
 
-    $query = "SELECT * FROM `inventory`";
-    $result = run_sql($query);
+	$query = "SELECT ol.item_id, `item_name`, `brand`, `model`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o, `inventory` i WHERE ol.order_id = o.order_id AND customer_id = '$user_id' AND ol.item_id = i.item_id";
+    
+	$result = run_sql($query);
+
+	function find_user($user_id){
+		global $db;
+  
+		$query = "SELECT `user_id`, `user_name`, `password`, `role` FROM `users` WHERE `user_id` = '$user_id'";
+		$result = run_sql($query);
+		$user = mysqli_fetch_assoc($result);
+		mysqli_free_result($result);
+		return $user;
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -26,13 +40,13 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-    <title>Order</title>
+    <title>About</title>
 </head>
 
 <body>
     <nav class="navbar navbar-expand-sm navbar-dark bg-dark mb-3">
         <div class="container">
-            <a class="navbar-brand" href="#" style="color: #ffa343;">Best In Town</a>
+            <a class="navbar-brand" href="#">Best In Town</a>
             <button class="navbar-toggler" data-toggle="collapse" data-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -47,41 +61,67 @@
 				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="about.php" style="color: #ffa343;">About</a>
+					<?php
+						if($logged_in){
+							if($manager){
+								echo '<a class="nav-link" href="manager_home.php">Home</a>';
+							} else {
+								echo '<a class="nav-link" href="customer_home.php">Home</a>';
+							}
+						} else {
+							echo '<a class="nav-link" href="index.php">Home</a>';
+						}
+					?>
                     </li>
                     <li class="nav-item">
-                        <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
+                        <a class="nav-link" href="about.php">About</a>
                     </li>
+                    <?php if($logged_in){
+                            echo '<li class="nav-item">
+                                        <a href="logout.php" class="nav-link">Logout</a>
+                                 </li>';
+                        } else {
+                            echo '<li class="nav-item dropdown"><a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Login</a>  <div class="dropdown-menu">
+                            <a href="sign_up.php" class="dropdown-item">Sign Up</a>
+                            <a href="login.php" class="dropdown-item">Log in</a>
+                        </div> </li>';
+                        }
+                        ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="view_inventory.php" style="color: #ffa343;">Inventory</a>
+                        <a class="nav-link" href="order.php">Order</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.php" style="color: #ffa343;">Contact</a>
-                    </li>
+					<?php if($logged_in){
+						echo '<li class="nav-item">
+						 		<a class="nav-link" href="contact.php">Contact</a>
+					 		</li>';
+						}
+						?>
                 </ul>
             </div>
         </div>
     </nav>
+
     <div class="container">
         <div class="jumbotron text-center text-light">
-            <h1>Best In Town - Home Appliance Store</h1>
-            <h3>Customers Home Page</h3>
+            <h1 class="display-4">Best In Town</h1>
+            <h2 class="display-6">Home Appliance Store</h2>
         </div>
         <div class="card my-5">
             <div class="card-header">
-                <h1 class="text-center m-4">Select Items to Order</h1>
+                <h1 class="text-center m-4">Orders</h1>
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="inventory_items">
                     <div class="table responsive">
                         <thead>
                             <tr>
-                                <th>Item ID</th>
-                                <th>Name</th>
-                                <th>Brand</th>
+                                <th>Order ID</th>
+                                <th>Item Name</th>
                                 <th>Model</th>
-                                <th>Price</th>
-                                <th>Order</th>
+								<th>Brand</th>
+                                <th>Timestamp</th>
+                                <th>Approval Status</th>
+								<th>Delivery Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -91,15 +131,14 @@
                          	while($row = $result->fetch_assoc()) {
                              
 
-                                echo    '<tr>
-                                          <!--<td> '.$row["item_id"].'</td>-->
-                                          <td> '.$row["item_id"].'</td>
-                                          <td> '.$row["item_name"]. '</td>
-                                          <td> '.$row["brand"]. '</td>
-                                          <td> '.$row["model"]. '</td>
-                                          <td> '.$row["price"]. '</td>
-										  <td><a href="order_form.php?id='.$row["item_id"].'"><input
-										 	  class="btn btn-info" type="button" value="order item"></a></td>
+								echo    '<tr>
+											<td> '.$row["order_id"]. '</td>
+                                        	<td> '.$row["item_name"].'</td>
+											<td> '.$row["brand"]. '</td>
+											<td> '.$row["model"]. '</td>
+                                        	<td> '.$row["date"]. '</td>
+											<td> '.$row["approval_status"]. '</td>
+											<td> '.$row["delivery_status"]. '</td>
                                         </tr>';
 
                             }//end while
@@ -115,7 +154,7 @@
         </div>
     </div>
     <!-- Footer -->
-    <footer class="page-footer font-small bg-dark mt-5">
+    <footer class="page-footer font-small bg-dark">
         <div class="footer-copyright text-center text-light py-4">
             &copy; <span id="year"></span> Copyright
         </div>

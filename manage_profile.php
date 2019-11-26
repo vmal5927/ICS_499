@@ -6,12 +6,9 @@
         header("Location: login.php");
     }
     require_once ('db_configuration.php');
-    //require_once ('login.php');
     
     $user_id = $_SESSION['user_id'];
-    // $query = "SELECT * FROM `inventory`";
-    // $result = run_sql($query);
-
+  
     if (isset($_GET['update'])){
 	  
 		$update = $_GET['update'];
@@ -32,11 +29,9 @@
 			$message = 'Your profile has been updated successfully! Click OK to exit.';
 			updateProfile();
 		}
-		//$readonly = $update ? "readonly" : "";
-       // echo '$item_id';
+
         $sql = "SELECT * FROM `users`
                 WHERE `user_id` = '$user_id'";
-         //$query = "SELECT * FROM `inventory` WHERE `item_name` = 'Refrigerator'";
                 
         if (!$result = $db->query($sql)) {
             echo 'Something went wrong.';
@@ -75,7 +70,7 @@
 	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
 	<link rel="stylesheet" href="css/style.css" />
-	<title>Order Form</title>
+	<title>Manage Profile</title>
 </head>
 
 <body>
@@ -86,9 +81,13 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<form class="form-inline mr-auto">
+				<!-- <form class="form-inline mr-auto">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
 					<button class="btn btn-outline-primary">Search</button>
+				</form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
 				</form>
 				<ul class="navbar-nav">
 					<li class="nav-item">

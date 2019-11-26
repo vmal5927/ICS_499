@@ -20,10 +20,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
+                <!-- <form class="form-inline mr-auto">
                     <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
                     <button class="btn btn-outline-primary">Search</button>
-                </form>
+                </form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Home</a>
@@ -52,10 +56,6 @@
         </div>
     </nav>
     <div class="container">
-        <!-- <div class="p-3">
-            <h1 class="display-4 text-center font-text-bold text-light">Best In Town</h1>
-            <h1 class="display-6 text-center font-text-bold text-light">Home Appliance Store</h1>
-        </div> -->
         <div class="jumbotron text-center text-light">
             <h1 class="display-4">Best In Town</h1>
             <h2 class="display-6">Home Appliance Store</h2>
@@ -63,15 +63,10 @@
         <div class="card mx-auto my-5" style="width:800px">
             <div class="card-header">
 
-                <h1 class=""> Sign Up </h1>
+                <h1 class="text-center m-4"> Sign Up </h1>
+				<h4 class="text-center">Please fill all fields in the form</h4>
             </div>
-            <!-- <h2>Form Validation</h2> -->
-            <!-- <p>In this example, we use <code>.needs-validation</code>, which will add the validation
-                effect
-                AFTER the
-                form
-                has been submitting (if there's anything missing).</p>
-            <p>Try to submit this form before filling out the input fields, to see the effect.</p> -->
+           
             <div class="card-body px-3">
                 <form action="insert_user.php" method="post" class="needs-validation" novalidate>
                     <div class="form-row">
@@ -128,7 +123,7 @@
                         <div class="form-group">
                             <div class="col">
                                 <label for="city">City:</label>
-                                <input type="text" class="form-control" id="city" placeholder="Enter your city"
+                                <input type="text" class="form-control" id="city" placeholder="Enter city"
                                     name="city" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
@@ -139,7 +134,7 @@
                         <div class="form-group">
                             <div class="col">
                                 <label for="state">State:</label>
-                                <input type="text" class="form-control" id="state" placeholder="Enter your state"
+                                <input type="text" class="form-control" id="state" placeholder="Enter state"
                                     name="state" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
@@ -168,7 +163,7 @@
                         <div class="form-group">
                             <div class="col">
                                 <label for="zip">Phone:</label>
-                                <input type="text" class="form-control" id="phone" placeholder="Enter phone num"
+                                <input type="text" class="form-control" id="phone" placeholder="Enter phone"
                                     name="phone" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>

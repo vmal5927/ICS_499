@@ -20,10 +20,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
+                <!-- <form class="form-inline mr-auto">
                     <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
                     <button class="btn btn-outline-primary">Search</button>
-                </form>
+                </form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a href="logout.php" class="nav-link" style="color: #ffa343;">Logout</a>
@@ -32,7 +36,7 @@
                         <a class="nav-link" href="view_inventory.php" style="color: #ffa343;">Inventory</a>
                     </li>
                     <li class=" nav-item">
-                        <a class="nav-link" href="#" style="color: #ffa343;">Order</a>
+                        <a class="nav-link" href="view_orders.php" style="color: #ffa343;">Order</a>
                     </li>
                 </ul>
             </div>
@@ -68,7 +72,7 @@
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-success" style="width: 200px;" href="#">Add Item</a>
+                            <a class="btn btn-success" style="width: 200px;" href="add_item_form.php">Add Item</a>
                         </div>
                     </div>
                     <!-- <div id="collapseOne" class="collapse" data-parent="#accordion">
@@ -79,7 +83,7 @@
                     </div> -->
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-danger" style="width: 200px;" href="#">Update/Remomve Item</a>
+                            <a class="btn btn-danger" style="width: 200px;" href="modify_item.php">Update/Remove Item</a>
                         </div>
                     </div>
                 </div>
@@ -91,18 +95,18 @@
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 130px;" href="view_orders.php">View
+                            <a class="btn" style="background-color: #8A2BE2; color: white; width: 170px;" href="view_orders.php">View/Search
                                 Orders</a>
                         </div>
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-success" style="width: 130px;" href="#">Search Orders</a>
+                            <a class="btn btn-success" style="width: 170px;" href="set_approval_status.php">Set Approval Status</a>
                         </div>
                     </div>
                     <div id="collapseTwo" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-danger" style="width: 130px;" href="#">Update Orders</a>
+                            <a class="btn btn-danger" style="width: 170px;" href="set_delivery_status.php">Set Delivery Status</a>
                         </div>
                     </div>
                 </div>
@@ -114,12 +118,12 @@
                     </div>
                     <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-success" style="width: 185px;" href="#">View Profiles</a>
+                            <a class="btn btn-success" style="width: 185px;" href="view_profiles.php">View Profiles</a>
                         </div>
                     </div>
                     <div id="collapseThree" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn" style="background-color: #8A2BE2; color: white;" href="#">Update/Delete
+                            <a class="btn" style="background-color: #8A2BE2; color: white ; width: 185px;" href="modify_profiles.php">Edit/Delete
                                 Profiles</a>
                         </div>
                     </div>
@@ -127,7 +131,7 @@
             </div>
             <div class="card ">
                 <div class="card-body">
-                    <img class="card-img-top img-fluid" src="img/Appliances.jpg" alt="">
+                    <img class="card-img-top img-fluid" src="img/Appliances.jpg" alt="Appliances">
                 </div>
             </div>
         </div>

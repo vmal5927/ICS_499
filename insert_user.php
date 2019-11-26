@@ -20,10 +20,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
+                <!-- <form class="form-inline mr-auto">
                     <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
                     <button class="btn btn-outline-primary">Search</button>
-                </form>
+                </form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Home</a>
@@ -70,26 +74,7 @@
         $zip_code = $_POST['zip'];
         $email = $_POST['email'];
         $phone = $_POST['phone'];
-
-        // $query = "INSERT INTO users VALUES (?, ?, ?, ?, ?, ?, ?)";
-        // $stmt = $db -> prepare($query);
-        // $stmt -> bind_param('sssssss', $first_name, $last_name, $user_name, $password, $street_address, $city, $state);
-        // $stmt -> execute();
-        // if($stmt -> affected_rows > 0){
-        //     echo "<p>User inserted successfully.</p>";
-        // }else{
-        //     echo "<p>Failed to insert user.</p>";
-        // }
-      //  $query = "INSERT INTO users VALUES ($fname, $last_name, $user_name, $password, $street_address, $city, $state)";
-
-    //   $sql = "INSERT INTO book (publisher_name, author, book_name, series, genre,
-    //                          pages, isbn_10, isbn_13, language, price, stock,
-    //                          published_date, image)
-    //       VALUES('$publisher','$autor','$bookName','$series','$genre','$pages',
-    //              '$isbn10','$isbn13','$language','$price','$stock','$publishedDate',
-    //              '$image' );";
-
-        // $query = "INSERT INTO `users`(`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`) VALUES ($first_name, $last_name, $user_name, $password, $street_address, $city, $state)";
+        
         $query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
         $result = run_sql($query);
         $query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";

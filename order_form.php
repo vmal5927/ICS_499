@@ -1,11 +1,15 @@
 <?php 
     ob_start();
     session_start();
-    
+    require_once ('db_configuration.php');
     if(!isset($_SESSION['user_id'])){
         header("Location: login.php");
-    }
-    require_once ('db_configuration.php');
+	}
+	$order_id = $_SESSION['order_id'] ?? '';
+	//$order_id = $_GET['order_id'] ?? '';
+	//$order_id = $_GET['order_id'];
+	//echo $order_id;
+    //require_once ('db_configuration.php');
     ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -29,10 +33,14 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
+                <!-- <form class="form-inline mr-auto">
                     <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
                     <button class="btn btn-outline-primary">Search</button>
-                </form>
+                </form> -->
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="index.php">Home</a>
@@ -80,8 +88,10 @@
   }//end if
 
   if ($result->num_rows > 0) {
+	//$order_id = $_GET['order_id'] ?? '';
       // output data of each row
       while($row = $result->fetch_assoc()) {
+		  //echo $order_id;
             echo '<form class="form" action="create_order_line.php" method="POST">
             <div class="form-group">
               <label for="item_id">Item Id:</label> <br> <input type="text" class="form-control" name="item_id" value="'.$row["item_id"].'" maxlength="50" readonly> 
@@ -124,48 +134,7 @@
 	?>
             </div>
         </div>
-        <!--<div class="card my-5">
-            <div class="card-header">
-                <h1 class="text-center m-4">About</h1>
-            </div>
-            <div class="card-body">
-                <p>
-                    Nisi veniam ut esse consectetur. Deserunt duis ex Lorem aliquip.
-                    Nulla qui anim tempor nulla sit ad laboris ea elit dolor ad laborum.
-                    Velit id culpa labore non ea incididunt aliquip tempor. Aliquip quis
-                    cillum irure laborum ipsum ad laboris.
-                </p>
-
-                <p>
-                    Reprehenderit consectetur exercitation aliquip aute ipsum elit magna
-                    ipsum eu sit. Do ad dolore dolor enim. Do ipsum sint tempor irure
-                    officia sint magna laboris.
-                </p>
-
-                <p>
-                    qui incididunt elit in fugiat ad do incididunt aliqua incididunt.
-                    Est anim eu ex aliquip cupidatat consectetur Lorem nisi eu veniam
-                    officia. Anim do nostrud mollit minim incididunt. Consectetur
-                    proident fugiat adipisicing veniam.
-                </p>
-
-                <p>
-                    Sint eu dolore et dolor excepteur elit qui cillum amet consequat
-                    velit consectetur. Velit occaecat tempor ipsum est deserunt ad
-                    proident. Sunt Lorem do aute consequat sint culpa est deserunt
-                    minim. Cillum sint non non sunt esse ullamco dolore consectetur
-                    veniam velit occaecat incididunt. Commodo cupidatat consequat irure
-                    aute sit pariatur. Ipsum labore pariatur consequat ad non amet
-                    mollit adipisicing.
-                </p>
-
-                <p>
-                    Nulla cupidatat ad et laboris nisi. Anim tempor id sunt officia anim
-                    dolore enim aute velit. Id irure ut enim id mollit nulla laboris non
-                    sint veniam nulla occaecat aute fugiat.
-                </p>
-            </div>
-        </div>-->
+        
     </div>
     <!-- Footer -->
     <footer class="page-footer font-small bg-dark">

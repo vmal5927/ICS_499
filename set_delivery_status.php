@@ -4,28 +4,35 @@
 	session_start();
 	require_once('db_configuration.php');
 
+	$errors = [];
+    if(!isset($_SESSION['user_id'])){
+	   $errors[] = "You have to log in first.";
+	}
+	
+	if(!isset($_SESSION['role']) || $_SESSION['role'] == '0'){
+		$errors[] = "You must be logged in as a manager to access this page";
+	}
+
 	$logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
 	if($logged_in){
 		$user_id = $_SESSION['user_id'];
 		$user = find_user($user_id);
 		$manager = $user['role'];
 	}
-       
-    $id = $_GET['id'] ?? '0';
 
-    switch($id){
-        case '0':
-            $query = "SELECT * FROM `inventory`";
-            break;
-        case '1':
-            $query = "SELECT * FROM `inventory` WHERE `item_name` = 'Refrigerator'";
-            break;
-        case '2':
-            $query = "SELECT * FROM `inventory` WHERE `item_name` = 'Washer' OR `item_name` = 'Dryer'";
-            break;
-        case '3':
-            $query = "SELECT * FROM `inventory` WHERE `item_name` = 'Range'";
-    }
+	if(isset($_GET['id'])){
+		$order_id = $_GET['id'];
+		mark_as_delivered();
+		header("Location: set_delivery_status.php");
+	}
+   
+	function mark_as_delivered(){
+		global $db, $order_id;
+		$sql = "UPDATE `orders` SET `delivery_status`= '1' WHERE `order_id` = '$order_id' LIMIT 1";
+		$db->query($sql);
+	}
+       	
+	$query = "SELECT `item_id`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o WHERE ol.order_id = o.order_id";
     
 	$result = run_sql($query);
 
@@ -52,7 +59,7 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
 
-    <title>About</title>
+    <title>Set Delivery Status</title>
 </head>
 
 <body>
@@ -63,14 +70,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
-				<form class="form-inline mr-auto" action="search.php" method="GET">
-					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
-					<input class="btn btn-outline-primary" type="submit" value="Search" />
-				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
 					<?php
@@ -120,40 +119,49 @@
         </div>
         <div class="card my-5">
             <div class="card-header">
-                <h1 class="text-center m-4">Inventory</h1>
+                <h1 class="text-center m-4">Set Orders Delivery Status</h1>
             </div>
             <div class="card-body">
                 <table class="table table-striped" id="inventory_items">
                     <div class="table responsive">
                         <thead>
                             <tr>
+                                <th>Order ID</th>
+                                <th>Customer ID</th>
                                 <th>Item ID</th>
-                                <th>Name</th>
-                                <th>Brand</th>
-                                <th>Model</th>
-                                <th>Price</th>
+                                <th>Timestamp</th>
+                                <th>Approval Status</th>
+								<th>Delivery Status</th>
+								<th>Mark as Delivered</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php
+							<?php
+							if($errors){
+								echo display_errors($errors);
+							} else {
 						  if ($result->num_rows > 0) {
                             // output data of each row
                          	while($row = $result->fetch_assoc()) {
                              
 
-                                echo    '<tr>
-                                          <td> '.$row["item_id"].'</td>
-                                          <td> '.$row["item_name"]. '</td>
-                                          <td> '.$row["brand"]. '</td>
-                                          <td> '.$row["model"]. '</td>
-                                          <td> '.$row["price"]. '</td>
+								echo    '<tr>
+											<td> '.$row["order_id"]. '</td>
+                                        	<td> '.$row["customer_id"].'</td>
+                                        	<td> '.$row["item_id"]. '</td>
+                                        	<td> '.$row["date"]. '</td>
+											<td> '.$row["approval_status"]. '</td>
+											<td> '.$row["delivery_status"]. '</td>
+											<td><a href="set_delivery_status.php?id='.$row["order_id"].'"><input
+										 	  class="btn btn-success" type="button" value="Mark as Delivered"></a></td>
                                         </tr>';
 
                             }//end while
                         }//end if
                         else {
                             echo "0 results";
-                        }//end else
+						}//end else
+					}
                         ?>
                         </tbody>
                     </div>

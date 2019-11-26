@@ -28,7 +28,8 @@ a:visited {
   color: #ffa343 !important;
 }
 
-a:hover,
+
+a.nav-link:hover,
 a:active {
   color: gold !important;
   -webkit-transform: scale(1.1);
@@ -55,4 +56,8 @@ tr:nth-child(even) {
 
 .navbar-brand {
   color: #ffa343 !important;
+}
+
+.errors {
+	color: red;
 }

@@ -21,7 +21,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if(empty($errors)){
-        $login_failure_msg = "Log in was unsuccessful.";
+        $login_failure_msg = "Log in was unsuccessful. Please provide correct username and password.";
         $user = find_user($username);
        // echo '$user["user_name"]';
         if($user) {
@@ -46,10 +46,11 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 
             }
       
-          } else {
+          } //else {
             // no username found
-            $errors[] = $login_failure_msg;
-          }
+            //$errors[] = $login_failure_msg;
+		 // }
+		  $errors[] = $login_failure_msg;
     }
 }
 
@@ -82,7 +83,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
       session_regenerate_id();
       $_SESSION['user_id'] = $user['user_id'];
       $_SESSION['last_login'] = time();
-      $_SESSION['username'] = $user['user_name'];
+	  $_SESSION['username'] = $user['user_name'];
+	  $_SESSION['role'] = $user['role'];
       return true;
     }
 ?>
@@ -108,10 +110,10 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form>
+				<form class="form-inline mr-auto" action="search.php" method="GET">
+					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
+					<input class="btn btn-outline-primary" type="submit" value="Search" />
+				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
                         <a class="nav-link" href="#">Home</a>
@@ -147,10 +149,15 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         <div class="card mx-auto my-5" style="width:420px">
             <div class="card-header">
 
-                <h1 class=""> Login </h1>
+                <h1 class="text-center"> Login </h1>
             </div>
 
             <div class="card-body px-3">
+				<?php
+				if($errors){
+					echo display_errors($errors);
+				}
+				?>
                 <form action="login.php" method="post" class="needs-validation" novalidate>
 
 

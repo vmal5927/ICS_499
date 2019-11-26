@@ -1,27 +1,28 @@
-<?php 
+<?php
+    
     ob_start();
 	session_start();
-	
+	require_once('db_configuration.php');
+
 	$logged_in = isset($_SESSION['user_id'] ) ? 1 : 0;
-	if(!$logged_in)
+	if(!$logged_in || $_SESSION['role'] != 1){
 		header("Location: login.php");
-    // if(!isset($_SESSION['user_id'])){
-    //     header("Location: login.php?page=contact.php");
-    // }
-    // require_once ('db_configuration.php');
+	}
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <script src="https://kit.fontawesome.com/b66f8991ae.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <title>Contact</title>
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css">
+
+    <title>About</title>
 </head>
 
 <body>
@@ -32,22 +33,27 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
 				<form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
 				</form>
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link" href="index.php">Home</a>
+					<?php
+						if($logged_in){
+							if($_SESSION['role'] == '1'){
+								echo '<a class="nav-link" href="manager_home.php">Home</a>';
+							} else {
+								echo '<a class="nav-link" href="customer_home.php">Home</a>';
+							}
+						} else {
+							echo '<a class="nav-link" href="index.php">Home</a>';
+						}
+					?>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="about.php">About</a>
                     </li>
-
                     <?php if($logged_in){
                             echo '<li class="nav-item">
                                         <a href="logout.php" class="nav-link">Logout</a>
@@ -59,74 +65,68 @@
                         </div> </li>';
                         }
                         ?>
-
-
-                    <!-- </li>-->
-                    <li class="nav-item">
-                        <a class="nav-link" href="view_inventory.php">Inventory</a>
-                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="order.php">Order</a>
                     </li>
+					<?php if($logged_in){
+						echo '<li class="nav-item">
+						 		<a class="nav-link" href="contact.php">Contact</a>
+					 		</li>';
+						}
+						?>
                 </ul>
             </div>
         </div>
     </nav>
     <div class="container">
-        <!-- <div class="p-3">
-            <h1 class="display-4 text-center font-text-bold text-light">Best In Town</h1>
-            <h1 class="display-6 text-center font-text-bold text-light">Home Appliance Store</h1>
-        </div> -->
         <div class="jumbotron text-center text-light">
             <h1 class="display-4">Best In Town</h1>
             <h2 class="display-6">Home Appliance Store</h2>
         </div>
         <div class="card mx-auto my-5" style="width:800px">
             <div class="card-header">
-                <h1 class=""> Contact Us </h1>
+
+                <h1 class=""> Add Item </h1>
             </div>
-            <!-- <h2>Form Validation</h2> -->
-            <!-- <p>In this example, we use <code>.needs-validation</code>, which will add the validation
-                effect
-                AFTER the
-                form
-                has been submitting (if there's anything missing).</p>
-            <p>Try to submit this form before filling out the input fields, to see the effect.</p> -->
+            
             <div class="card-body px-3">
-                <!-- <form action="contact_success.php" method="post" class="needs-validation" novalidate> -->
-				<form action="contact_process.php" method="post" class="needs-validation" novalidate>
-                    <!-- <div class="form-row">
-                        <div class="form-group">
-                            <div class="col">
-                                <label for="fname">First Name:</label>
-                                <input type="text" class="form-control" id="fname" name="fname" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <div class="col">
-                                <label for="lname">Last Name:</label>
-                                <input type="text" class="form-control" id="lname" name="lname" required>
-                                <div class="valid-feedback">Valid.</div>
-                                <div class="invalid-feedback">Please fill out this field.</div>
-                            </div>
-                        </div>
-                    </div> -->
+                <form action="add_item.php" method="post" class="needs-validation" novalidate>
                     <div class="form-row">
-                        <!-- <div class="form-group">
+                        <div class="form-group">
                             <div class="col">
-                                <label for="email">email:</label>
-                                <input type="text" class="form-control" id="email" name="email" required>
+                                <label for="item_name">Item name</label>
+                                <input type="text" class="form-control" id="Item_name" placeholder="Enter item name"
+                                    name="item_name" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
-                        </div> -->
+                        </div>
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="brand">Brand</label>
+                                <input type="text" class="form-control" id="brand" placeholder="Enter brand"
+                                    name="brand" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <div class="col">
+                                <label for="model">Model</label>
+                                <input type="text" class="form-control" id="model" placeholder="Enter model"
+                                    name="model" required>
+                                <div class="valid-feedback">Valid.</div>
+                                <div class="invalid-feedback">Please fill out this field.</div>
+                            </div>
+                        </div>
 
                         <div class="form-group">
                             <div class="col">
-                                <label for="pwd">Subject:</label>
-                                <input type="text" class="form-control" id="pwd" name="subject" required>
+                                <label for="price">Price</label>
+                                <input type="price" class="form-control" id="price" placeholder="Enter price"
+                                    name="price" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
@@ -135,23 +135,15 @@
                     <div class="form-row">
                         <div class="form-group">
                             <div class="col">
-                                <label for="comment">Message:</label>
-                                <textarea class="form-control" rows="5" id="message" name="message" required></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <!--  <div class="form-row">
-                        <div class="form-group">
-                            <div class="col colspan-2">
-                                <label for="uname">Username:</label>
-                                <input type="text" class="form-control" id="uname" placeholder="Enter username"
-                                    name="uname" required>
+                                <label for="qty">Quantity</label>
+                                <input type="text" class="form-control" id="qty" placeholder="Enter quantity"
+                                    name="qty" required>
                                 <div class="valid-feedback">Valid.</div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
-                    </div> -->
-                    <input type="submit" class="btn btn-primary" value="Submit" />
+                    </div>
+                    <input type="submit" class="btn btn-primary form-control mx-2" value="Submit" style="width: 98%; height: 45px;"/>
                 </form>
             </div>
         </div>
