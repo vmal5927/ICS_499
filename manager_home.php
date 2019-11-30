@@ -67,7 +67,7 @@
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-primary" style="width: 200px;" href="view_inventory_manager.php"> View/Search Inventory</a>
+                            <a class="btn btn-primary" style="width: 200px;" href="view_inventory.php"> View/Search Inventory</a>
                         </div>
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
