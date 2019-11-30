@@ -45,12 +45,12 @@
                     <li class="nav-item">
                         <a class="nav-link" href="view_inventory.php">Inventory</a>
                     </li>
-                    <li class="nav-item">
+                    <!-- <li class="nav-item">
                         <a class="nav-link" href="order.php">Order</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="contact.php">Contact</a>
-                    </li>
+                    </li> -->
                 </ul>
             </div>
         </div>
@@ -64,25 +64,40 @@
         <?php
         require_once('db_configuration.php');
 
-        $first_name = $_POST['fname'];
-        $last_name = $_POST['lname'];
-        $user_name = $_POST['uname'];
-        $password = $_POST['pswd'];
-        $street_address = $_POST['streetaddress'];
-        $city = $_POST['city'];
-        $state = $_POST['state'];
-        $zip_code = $_POST['zip'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        
-        $query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
-        $result = run_sql($query);
-        $query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
-        $result1 = run_sql($query);
-        $db -> close();
-        if($result){
-            echo '<div class="card">Success! The user has been added.</div>';
-        }
+		//$result = 0;
+		if($_SERVER['REQUEST_METHOD'] == 'POST') {
+			$first_name = $_POST['fname'];
+			$last_name = $_POST['lname'];
+			$user_name = $_POST['uname'];
+			$password = $_POST['pswd'];
+			$street_address = $_POST['streetaddress'];
+			$city = $_POST['city'];
+			$state = $_POST['state'];
+			$zip_code = $_POST['zip'];
+			$email = $_POST['email'];
+			$phone = $_POST['phone'];
+			
+			$error_message = '';
+			$query = "SELECT * FROM `users` WHERE `first_name` = '$first_name' AND `last_name` = '$last_name' AND `user_name` = '$user_name'";
+			$result1 = run_sql($query);
+			if($result1->num_rows > 0){
+				$error_message = 'Failed to register user. The record with such first name, last name, and username already exists. ';
+				$result = '0';
+			} else {
+				$query = "INSERT INTO users (`first_name`, `last_name`, `user_name`, `password`, `street_address`, `city`, `state`, `email`, `phone`) VALUES ('$first_name', '$last_name', '$user_name', '$password', '$street_address', '$city', '$state', '$email', '$phone');";
+				$result = run_sql($query);
+				$query = "INSERT INTO `zip_codes`(`city`, `state`, `zip`) VALUES ('$city','$state','$zip_code')";
+				$result1 = run_sql($query);
+			}
+			$db -> close();
+		
+        	if($result){
+            	echo '<div class="card">Success! The user has been added.</div>';
+			}
+			echo '<div class="card text-center text-danger"><h4>'.$error_message.'</h4></div>';
+			
+			//echo '<div class="card">'.$error_message.'</div>';
+		}
         ?>
     </div>
     <!-- Footer -->

@@ -31,7 +31,7 @@
 		$sql = "UPDATE `orders` SET `approval_status`= '1' WHERE `order_id` = '$order_id' LIMIT 1";
 		$db->query($sql);
 	}
-    
+		
     $order_id = $_GET['order_id'] ?? '0';
    	
 	$query = "SELECT `item_id`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o WHERE ol.order_id = o.order_id";
@@ -146,7 +146,6 @@
                             // output data of each row
                          	while($row = $result->fetch_assoc()) {
                              
-
 								echo    '<tr>
 											<td> '.$row["order_id"]. '</td>
                                         	<td> '.$row["customer_id"].'</td>

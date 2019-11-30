@@ -23,6 +23,7 @@
 	if(isset($_GET['id'])){
 		$order_id = $_GET['id'];
 		mark_as_delivered();
+		update_quantity_in_stock();
 		header("Location: set_delivery_status.php");
 	}
    
@@ -31,7 +32,28 @@
 		$sql = "UPDATE `orders` SET `delivery_status`= '1' WHERE `order_id` = '$order_id' LIMIT 1";
 		$db->query($sql);
 	}
-       	
+	
+	function update_quantity_in_stock(){
+		global $db, $order_id;
+		$query = "SELECT * FROM `order_lines` WHERE `order_id` = '$order_id'";
+		$result = run_sql($query);
+		if ($result->num_rows > 0) {
+			while($row = $result->fetch_assoc()) {
+				$item_id = $row["item_id"];
+				$quantity = $row["quantity"];
+				$query = "SELECT * FROM `inventory` WHERE `item_id` = '$item_id'";
+				$inv_result = run_sql($query);
+				if($inv_result->num_rows > 0){
+					$inv_row = $inv_result->fetch_assoc();
+					$quantity_in_stock = $inv_row["quantity_in_stock"];
+					$new_quantity = $quantity_in_stock - $quantity;
+					$query = "UPDATE `inventory` SET `quantity_in_stock` = '$new_quantity' WHERE `item_id` = '$item_id' LIMIT 1";
+					$final_result = run_sql($query);
+				}
+			}
+		}
+	}
+
 	$query = "SELECT `item_id`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o WHERE ol.order_id = o.order_id";
     
 	$result = run_sql($query);

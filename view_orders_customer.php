@@ -120,6 +120,7 @@
                                 <th>Model</th>
 								<th>Brand</th>
                                 <th>Timestamp</th>
+								<th>Quantity</th>
                                 <th>Approval Status</th>
 								<th>Delivery Status</th>
                             </tr>
@@ -136,7 +137,8 @@
                                         	<td> '.$row["item_name"].'</td>
 											<td> '.$row["brand"]. '</td>
 											<td> '.$row["model"]. '</td>
-                                        	<td> '.$row["date"]. '</td>
+											<td> '.$row["date"]. '</td>
+											<td> '.$row["quantity"]. '</td>
 											<td> '.$row["approval_status"]. '</td>
 											<td> '.$row["delivery_status"]. '</td>
                                         </tr>';

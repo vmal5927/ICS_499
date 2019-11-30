@@ -137,6 +137,7 @@
                                 <th>Customer ID</th>
                                 <th>Item ID</th>
                                 <th>Timestamp</th>
+								<th>Quantity</th>
                                 <th>Approval Status</th>
 								<th>Delivery Status</th>
                             </tr>
@@ -152,7 +153,8 @@
 											<td> '.$row["order_id"]. '</td>
                                         	<td> '.$row["customer_id"].'</td>
                                         	<td> '.$row["item_id"]. '</td>
-                                        	<td> '.$row["date"]. '</td>
+											<td> '.$row["date"]. '</td>
+											<td> '.$row["quantity"]. '</td>
 											<td> '.$row["approval_status"]. '</td>
 											<td> '.$row["delivery_status"]. '</td>
                                         </tr>';

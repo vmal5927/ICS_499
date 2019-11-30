@@ -82,7 +82,12 @@
 		}
         
         
-       
+		$query = "SELECT * FROM `order_lines` WHERE `order_id` = '$order_id' AND `item_id` = '$item_id'";
+		$result = run_sql($query);
+		if ($result->num_rows > 0){
+			echo '<div class="card text-center text-danger"><h3>Insertion Failure: Same item cannot be inserted twice into the same order.</h3></div>';
+			die;
+		}
         $query = "INSERT INTO order_lines (`item_id`, `order_id`, `quantity`) VALUES ('$item_id', '$order_id', '$quantity');";
         $result = run_sql($query);
                

@@ -75,7 +75,7 @@
                                 <label for="fname">First Name:</label>
                                 <input type="text" class="form-control" id="fname" placeholder="Enter first name"
                                     name="fname" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -84,7 +84,7 @@
                                 <label for="lname">Last Name:</label>
                                 <input type="text" class="form-control" id="lname" placeholder="Enter last name"
                                     name="lname" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -95,7 +95,7 @@
                                 <label for="uname">Username:</label>
                                 <input type="text" class="form-control" id="uname" placeholder="Enter username"
                                     name="uname" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -105,7 +105,7 @@
                                 <label for="pwd">Password:</label>
                                 <input type="password" class="form-control" id="pwd" placeholder="Enter password"
                                     name="pswd" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -114,9 +114,9 @@
                         <div class="form-group">
                             <div class="col">
                                 <label for="streetaddress">Street address:</label>
-                                <input type="text" class="form-control" id="srteetaddress" placeholder="Enter username"
+                                <input type="text" class="form-control" id="srteetaddress" placeholder="Enter street address"
                                     name="streetaddress" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -125,7 +125,7 @@
                                 <label for="city">City:</label>
                                 <input type="text" class="form-control" id="city" placeholder="Enter city"
                                     name="city" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -136,7 +136,7 @@
                                 <label for="state">State:</label>
                                 <input type="text" class="form-control" id="state" placeholder="Enter state"
                                     name="state" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -145,7 +145,7 @@
                                 <label for="zip">Zip code:</label>
                                 <input type="text" class="form-control" id="zip" placeholder="Enter zip code" name="zip"
                                     required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -156,7 +156,7 @@
                                 <label for="state">Email:</label>
                                 <input type="text" class="form-control" id="email" placeholder="Enter email"
                                     name="email" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -165,7 +165,7 @@
                                 <label for="zip">Phone:</label>
                                 <input type="text" class="form-control" id="phone" placeholder="Enter phone"
                                     name="phone" required>
-                                <div class="valid-feedback">Valid.</div>
+                                <div class="valid-feedback"></div>
                                 <div class="invalid-feedback">Please fill out this field.</div>
                             </div>
                         </div>
@@ -173,8 +173,8 @@
                     <div class="form-group form-check">
                         <label class="form-check-label" id="tclabel">
                             <input class="form-check-input" type="checkbox" name="remember" required> By creating an
-                            account, you agree to our terms and conditions
-                            <div class="valid-feedback">Valid.</div>
+                            account, you agree to our terms and conditions.
+                            <div class="valid-feedback"></div>
                             <div class="invalid-feedback">Check this checkbox to continue.</div>
                         </label>
                     </div>

@@ -132,6 +132,11 @@
                                 <th>Brand</th>
                                 <th>Model</th>
                                 <th>Price</th>
+								<?php
+									if($manager){
+										echo '<th>Quantity</th>';
+									}
+								?>
                             </tr>
                         </thead>
                         <tbody>
@@ -139,14 +144,15 @@
 						  if ($result->num_rows > 0) {
                             // output data of each row
                          	while($row = $result->fetch_assoc()) {
-                             
+								$quantity = $manager ? '<td> '.$row["quantity_in_stock"]. '</td>' : '';
 
                                 echo    '<tr>
                                           <td> '.$row["item_id"].'</td>
                                           <td> '.$row["item_name"]. '</td>
                                           <td> '.$row["brand"]. '</td>
                                           <td> '.$row["model"]. '</td>
-                                          <td> '.$row["price"]. '</td>
+										  <td> '.$row["price"]. '</td>
+										  	   '.$quantity. '
                                         </tr>';
 
                             }//end while
