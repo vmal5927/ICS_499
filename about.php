@@ -70,18 +70,7 @@
 					}
 				?>
 				</li>
-            <!-- <li class="nav-item dropdown">
-              <a
-                href="#"
-                class="nav-link dropdown-toggle"
-                data-toggle="dropdown"
-                >Login</a
-              >
-              <div class="dropdown-menu">
-                <a href="sign_up.php" class="dropdown-item">Sign Up</a>
-                <a href="login.php" class="dropdown-item">Log in</a>
-              </div>
-			</li> -->
+            
 			<?php if($logged_in){
                             echo '<li class="nav-item">
                                         <a href="logout.php" class="nav-link">Logout</a>

@@ -20,10 +20,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
 				<form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
@@ -75,12 +71,6 @@
                             <a class="btn btn-success" style="width: 200px;" href="add_item_form.php">Add Item</a>
                         </div>
                     </div>
-                    <!-- <div id="collapseOne" class="collapse" data-parent="#accordion">
-                        <div class="card-body">
-                            <a class="btn " style="width: 200px; background-color: #4B0082; color: white;" href="#">Add
-                                Item</a>
-                        </div>
-                    </div> -->
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
                             <a class="btn btn-danger" style="width: 200px;" href="modify_item.php">Update/Remove Item</a>

@@ -2,8 +2,7 @@
     ob_start();
 	session_start();
 	require_once ('db_configuration.php');
-	//$item_id = $_GET['id'] ?? '';
-	//$item_id = $_GET['id'];
+	
 	if(isset($_POST['submit'])){
 		if(isset($_POST['item_id'])){
 			$item_id = $_POST['item_id'];
@@ -27,85 +26,40 @@
 	}
 
 	$item_id = $_GET['id'] ?? '';
-	//$order_id = $_SESSION['order_id'] ?? '';
+	
 	$query = "SELECT * FROM `order_lines` WHERE `item_id` = '$item_id'";
 	$result = run_sql($query);
 	if($result->num_rows > 0){
-		//echo 'The Item has been ordered by at least one customer and cannot be deleted.';
+		
 		$errors[] = "The Item has been ordered by at least one customer and cannot be deleted.";
 	} else {
 		$query = "SELECT * FROM `inventory` WHERE `item_id` = '$item_id'";
 		$result = run_sql($query);
 	}
-   
-	// function display_errors($errors=array()) {
-	// 	$output = '';
-	// 	if(!empty($errors)) {
-	// 	  $output .= "<div class=\"errors\">";
-	// 	  $output .= "The following errors have occurred:";
-	// 	  $output .= "<ul>";
-	// 	  foreach($errors as $error) {
-	// 		$output .= "<li>" . htmlspecialchars($error) . "</li>";
-	// 	  }
-	// 	  $output .= "</ul>";
-	// 	  $output .= "</div>";
-	// 	}
-	// 	return $output;
-	//   }
-
-	  function delete_item(){
+   	
+	function delete_item(){
 		global $db, $item_id;
 		$query = "DELETE FROM `inventory` WHERE `item_id` = '$item_id' LIMIT 1";
 		$result = run_sql($query);
 		header("Location: modify_item.php");
-		}
-       
-    
-    // if (isset($_GET['update'])){
-	  
-	// 	$update = $_GET['update'];
-	// 	if($update == 0){
-	// 		$readonly = 'readonly';
-	// 		$href = 'customer_home.php';
-	// 		$manage_profile = 'View Profile';
-	// 		$message = $_GET['message'] ?? '';
-	// 	} elseif($update == 1) {
-	// 		$readonly = '';
-	// 		$href = 'manage_profile.php?update=2&readonly=readonly';
-	// 		$manage_profile = 'Update Profile';
-	// 		$message = 'Type new values in the fields you wish to change and press OK button.';
-	// 	} elseif($update == 2){
-	// 		$readonly = $_GET['readonly'] ?? '';
-	// 		$href = 'customer_home.php';
-	// 		$manage_profile = 'Update Profile';
-	// 		$message = 'Your profile has been updated successfully! Click OK to exit.';
-	// 		updateProfile();
-	// 	}
-		
-    //     if (!$result = $db->query($sql)) {
-    //         echo 'Something went wrong.';
-    //         die ('There was an error running query[' . $connection->error . ']');
-    //     }//end if
-	//   }//end if
-	  
-	  function updateProfile(){
-		  global $user_id, $db;
-		  $first_name = $_POST['first_name'];
-		  $last_name = $_POST['last_name'];
-		  $user_name = $_POST['user_name'];
-		  $password = $_POST['password'];
-		  $street_address = $_POST['street_address'];
-		  $city = $_POST['city'];
-		  $state = $_POST['state'];
-		  $email = $_POST['email'];
-		  $phone = $_POST['phone'];
+	}
+           
+   
+	function updateProfile(){
+		global $user_id, $db;
+		$first_name = $_POST['first_name'];
+		$last_name = $_POST['last_name'];
+		$user_name = $_POST['user_name'];
+		$password = $_POST['password'];
+		$street_address = $_POST['street_address'];
+		$city = $_POST['city'];
+		$state = $_POST['state'];
+		$email = $_POST['email'];
+		$phone = $_POST['phone'];
 
 		  $sql = "UPDATE `users` SET `first_name`= '$first_name',`last_name`='$last_name',`user_name`='$user_name',`password`='$password',`street_address`='$street_address',`city`='$city',`state`='$state',`email`='$email',`phone`='$phone' WHERE `user_id` = '$user_id'";
 		  $db->query($sql);
-		 // if (!$result = $db->query($sql)) {
-           // echo 'Something went wrong.';
-           // die ('There was an error running query[' . $connection->error . ']');
-       // }//end if
+		 
 	  }
 
 	  function find_user($user_id){
@@ -140,10 +94,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<!-- <form class="form-inline mr-auto">
-					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-					<button class="btn btn-outline-primary">Search</button>
-				</form> -->
+				
 				<form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />

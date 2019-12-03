@@ -20,10 +20,6 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto" method="post" action="searchBox.php?go id="searchform>
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
 				<form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
@@ -74,15 +70,15 @@
                     </div>
                     <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
-                            <a class="btn btn-primary" style="width: 145px; background-color: #8A2BE2;"
-                                href="view_inventory.php"> View Inventory</a>
+                            <a class="btn btn-primary" style="width: 185px; background-color: #8A2BE2;"
+                                href="view_inventory.php"> View/Search Inventory</a>
                         </div>
                     </div>
-                    <div id="collapseOne" class="collapse" data-parent="#accordion">
+                    <!-- <div id="collapseOne" class="collapse" data-parent="#accordion">
                         <div class="card-body">
                             <a class="btn btn-success" style="width: 145px;" href="#">Search Inventory</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
                 <div class="card">

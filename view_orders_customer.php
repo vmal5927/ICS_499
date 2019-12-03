@@ -10,10 +10,8 @@
 		$user = find_user($user_id);
 		$manager = $user['role'];
 	}
-       	   
-	// $query = "SELECT `item_id`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o WHERE ol.order_id = o.order_id AND customer_id = '$user_id'";
-
-	$query = "SELECT ol.item_id, `item_name`, `brand`, `model`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o, `inventory` i WHERE ol.order_id = o.order_id AND customer_id = '$user_id' AND ol.item_id = i.item_id";
+     	   
+		$query = "SELECT ol.item_id, `item_name`, `brand`, `model`, o.order_id, `quantity`, `customer_id`, `date`, `approval_status`, `delivery_status` FROM `order_lines` ol, `orders` o, `inventory` i WHERE ol.order_id = o.order_id AND customer_id = '$user_id' AND ol.item_id = i.item_id";
     
 	$result = run_sql($query);
 
@@ -51,11 +49,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
-				<form class="form-inline mr-auto" action="search.php" method="GET">
+   				 <form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
 				</form>

@@ -9,6 +9,8 @@
 		$user_id = $_SESSION['user_id'];
 		$user = find_user($user_id);
 		$manager = $user['role'];
+	} else {
+		$manager = 0;
 	}
        
     $id = $_GET['id'] ?? '0';
@@ -63,10 +65,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
+               
 				<form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />

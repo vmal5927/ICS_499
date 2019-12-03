@@ -53,11 +53,7 @@
 
 		  $sql = "UPDATE `users` SET `first_name`= '$first_name',`last_name`='$last_name',`user_name`='$user_name',`password`='$password',`street_address`='$street_address',`city`='$city',`state`='$state',`email`='$email',`phone`='$phone' WHERE `user_id` = '$user_id'";
 		  $db->query($sql);
-		 // if (!$result = $db->query($sql)) {
-           // echo 'Something went wrong.';
-           // die ('There was an error running query[' . $connection->error . ']');
-       // }//end if
-	  }
+		}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -81,11 +77,7 @@
 				<span class="navbar-toggler-icon"></span>
 			</button>
 			<div class="collapse navbar-collapse" id="navbarNav">
-				<!-- <form class="form-inline mr-auto">
-					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-					<button class="btn btn-outline-primary">Search</button>
-				</form> -->
-				<form class="form-inline mr-auto" action="search.php" method="GET">
+				 <form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
 				</form>
@@ -119,15 +111,9 @@
 			</div>
 			<div class="card-body px-3 mx-auto">
 				<?php
- // include_once 'db_configuration.php';
-	
+ 	
   if (isset($_GET['id'])){
 	  
-    //$item_id = $_GET['id'];
-   // echo '$item_id';
-    // $sql = "SELECT * FROM `inventory`
-    //         WHERE `item_id` = '$item_id'";
-     //$query = "SELECT * FROM `inventory` WHERE `item_name` = 'Refrigerator'";
 	$sql = "SELECT * FROM `users` WHERE `user_id` = '$user_id'";		
     if (!$result = $db->query($sql)) {
         echo 'Something went wrong.';
@@ -138,50 +124,67 @@
   	if ($result->num_rows > 0) {
       // output data of each row
       $row = $result->fetch_assoc();
-            echo '<form class="form" action="'.$href.'" method="POST">
-                      
+            echo '<form class="needs-validation" action="'.$href.'" method="POST" novalidate>          
             <div class="form-group">
-                <label for="first name">First Name:</label> <br> <input type="text" class="form-control" name="first_name" value="'.$row["first_name"].'" '.$readonly.'>
+				<label for="first name">First Name:</label> <br> <input type="text" class="form-control" name="first_name" value="'.$row["first_name"].'" '.$readonly.' required>
+				<div class="valid-feedback"></div>
+                <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="last name">Last Name:</label> <br> <input type="text" class="form-control"
-					name="last_name" value="'.$row["last_name"].'" '.$readonly.'>
+					name="last_name" value="'.$row["last_name"].'" '.$readonly.' required>
+					<div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="user name">User Name:</label> <br> <input type="text" class="form-control" name="user_name"
-					value="'.$row["user_name"].'" '.$readonly.'>
+					value="'.$row["user_name"].'" '.$readonly.' required>
+					<div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="password">Password:</label> <br> <input type="text" class="form-control" name="password"
-					value="'.$row["password"].'" '.$readonly.'>
+					value="'.$row["password"].'" '.$readonly.' required>
+					<div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="street address">Street Address</label> <br> <input type="text" class="form-control"
-					name="street_address" value="'.$row["street_address"].'" '.$readonly.'>
+					name="street_address" value="'.$row["street_address"].'" '.$readonly.' required>
+					<div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="city">City</label> <br> <input type="text" class="form-control" name="city" 
-				value="'.$row["city"].'" '.$readonly.'>
+				id="city" value="'.$row["city"].'" '.$readonly.' required>
+				<div class="valid-feedback"></div>
+                <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="state">State</label> <br> <input type="text" class="form-control" name="state"
-					value="'.$row["state"].'" '.$readonly.'>
+					id="state" value="'.$row["state"].'" '.$readonly.' required>
+				<div class="valid-feedback"></div>
+                <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="email">Email</label> <br> <input type="text" class="form-control" name="email"
-					value="'.$row["email"].'" '.$readonly.'>
+					value="'.$row["email"].'" '.$readonly.' required>
+					<div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 
 			<div class="form-group">
 				<label for="phone">Phone</label> <br> <input type="text" class="form-control" name="phone"
-					value="'.$row["phone"].'" '.$readonly.'>
+					value="'.$row["phone"].'" '.$readonly.' required>
+					<div class="valid-feedback"></div>
+                    <div class="invalid-feedback">Please fill out this field.</div>
 			</div>
 			<br>
 
@@ -206,6 +209,26 @@
 		</div>
 	</footer>
 	<!-- Footer -->
+	<script>
+    // Disable form submissions if there are invalid fields
+    (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+    </script>
 	<script src="http://code.jquery.com/jquery-3.4.1.min.js"
 		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"

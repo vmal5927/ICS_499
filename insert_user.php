@@ -20,10 +20,7 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
-                <!-- <form class="form-inline mr-auto">
-                    <input type="text" class="form-control mr-2" placeholder="Enter Search Term" />
-                    <button class="btn btn-outline-primary">Search</button>
-                </form> -->
+                
 				<form class="form-inline mr-auto" action="search.php" method="GET">
 					<input type="text" class="form-control mr-2" placeholder="Enter Search Term" name="query" />
 					<input class="btn btn-outline-primary" type="submit" value="Search" />
@@ -45,12 +42,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="view_inventory.php">Inventory</a>
                     </li>
-                    <!-- <li class="nav-item">
-                        <a class="nav-link" href="order.php">Order</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="contact.php">Contact</a>
-                    </li> -->
+                    
                 </ul>
             </div>
         </div>
@@ -92,11 +84,10 @@
 			$db -> close();
 		
         	if($result){
-            	echo '<div class="card">Success! The user has been added.</div>';
+            	echo '<div class="card text-center text-success">Success! The user has been added.</div>';
 			}
 			echo '<div class="card text-center text-danger"><h4>'.$error_message.'</h4></div>';
 			
-			//echo '<div class="card">'.$error_message.'</div>';
 		}
         ?>
     </div>
